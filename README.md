@@ -57,3 +57,76 @@ void main(){
   }
 }
 ```
+
+<br>
+
+## 1.3 Nullable Variables
+
+**Null Safety**
+
+개발자가 null 값을 참조할 수 없도록 하는 것이다.
+
+String 뒤에 ?를 붙여줌으로서 name이 String 또는 null이 될 수 있다고 명시해준 것.
+
+기본적으로 모든 변수는 non-nullable(null 이 될 수 없음)
+
+```dart
+void main() {
+  String? name = 'testName';
+  name = null;
+  // name.length -> null 일 수도 있어서 오류.
+  if (name != null) {
+    print(name.length);
+  }
+  print(name?.length);
+}
+```
+
+<br>
+
+## 1.4 Final Variables
+
+**final**
+
+var 대신 final 로 변수를 만들게 되면 이 변수는 수정할 수 없다.
+
+Javascript const 랑 똑같다.
+
+```dart
+void main() {
+final name = "testName";
+name = "test2Name"; // 수정 불가
+
+final String username = "testStringName";
+// 명시적으로 타입을 추가로 지정할 순 있지만 컴파일러가 알아서 잘 추론하고, 값도 변경할 수 없기에 굳이 이렇게 할 필요는 없다.
+username = "test2StringName"; // 수정 불가
+}
+```
+
+<br>
+
+## 1.5 Late Variables
+
+**late**
+
+class 를 배워야 의미가 있는 키워드다. late 키워드를 사용한다면 선언과 할당을 분리할 수 있다.
+
+class 내의 인스턴스 변수가 final 이면 만들면서 바로 할당해야하고 late final 이면 만들고 난 후에 할당해도 된다.
+
+api 사용에 있어서 null을 실수로 사용하는 것을 방지하는 기능적인 부분을 강조한다.
+
+초기 데이터 없이 먼저 변수를 생성하고 추후에 데이터를 넣을 때 주로 사용한다.
+
+flutter 로 data fetching 을 할 때 유용하다.
+
+또한 Nullable 타입이 아닌(?가 없는) 타입들은 빈 값(null)을 가질 수 없는데 late 키워드를 써줘서 사용하기 전에 할당한다고 알려줄 수 있다.
+
+즉, null-safety가 보장된다. 그래서 한 함수 내에서 쓰는건 별 의미가 없다.
+
+```dart
+void main() {
+late final String name;
+
+print(name); // name 변수에 접근 불가
+}
+```
