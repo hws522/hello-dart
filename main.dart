@@ -1,10 +1,14 @@
 void main() {
-  var oldFriends = ["nico", "lynn"];
-  var newFriends = [
-    "a",
-    "b",
-    for (var friend in oldFriends) "❤️ $friend",
-  ];
+  var numbers = {1, 2, 3};
+  Set<int> numbers2 = {1, 2, 3};
 
-  print(newFriends); // [a, b, ❤️ nico, ❤️ lynn]
+  var listNumbers = [1, 2, 3];
+
+  numbers.add(1);
+  numbers.add(1);
+  numbers.add(1);
+  listNumbers.addAll([1, 1, 1]);
+
+  print(numbers); // {1, 2, 3}
+  print(listNumbers); // [1, 2, 3, 1, 1, 1]
 }

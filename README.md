@@ -248,3 +248,80 @@ void main() {
 ```
 
 <br>
+
+## 2.4 Maps
+
+**Map**
+
+map 은 javascript 의 object, python 의 dictionary 와 비슷하다.
+
+key 와 value 로 이루어져있다.
+
+커서를 hover 하면 나타나는 `Object` 타입은 typescript 에서 `any` 와 같다.
+
+key 와 value 는 어떤 자료형이던 가능하다.
+
+다른 타입과 동일하게 var 를 이용하여 정의하거나, 자료형을 명시하여 정의한다.
+
+dart는 모든 것이 class 이므로 map 또한 method 와 property 를 가진다.
+
+복잡하게도 만들 수 있지만, key 와 value 를 가지는 구조로 object 를 만든다면 그것들이 특정 형태를 가질 때 class 를 추천한다.
+
+```dart
+void main() {
+    var testMap = {
+        'a': 'apple',
+        'b': 'banana',
+        'c': 12345,
+    };
+
+    Map<int, bool> testMap2 = {
+        1: true,
+        2: false,
+    };
+
+    Map<List<int>, bool> testMap3 = {
+        [1, 0]: true,
+        [1, 1]: false,
+    };
+}
+```
+
+<br>
+
+## 2.5 Sets
+
+**Set**
+
+List 와의 차이는 중괄호와 중복여부다.
+
+Set 또한 var 를 이용하거나, 명시적으로 정의할 수 있다.
+
+Set 은 내부에 속한 모든 요소들이 유니크하다.
+
+중복으로 요소를 추가하더라도 중복이 되지 않는다.
+
+```dart
+void main() {
+  var numbers = {1, 2, 3};
+  Set<int> numbers2 = {1, 2, 3};
+
+  var listNumbers = [1, 2, 3];
+
+  numbers.add(1);
+  numbers.add(1);
+  numbers.add(1);
+  listNumbers.addAll([1, 1, 1]);
+
+  print(numbers); // {1, 2, 3}
+  print(listNumbers); // [1, 2, 3, 1, 1, 1]
+}
+```
+
+```
+Correction.
+
+Dart Set -> JS Set Dart Set -> Python Tuple
+
+Dart List -> JS Array Dart List -> Python List
+```
