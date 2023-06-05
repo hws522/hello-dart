@@ -16,7 +16,7 @@ dart는 자동으로 세미콜론을 붙여주지 않기 때문에 직접 붙여
 
 ```dart
 void main(){
-print("hello world");
+    print("hello world");
 }
 ```
 
@@ -28,9 +28,9 @@ print("hello world");
 
 ```dart
 void main() {
-var name = "pizza"; // 방법 1
-String name = "chicken"; // 방법 2
-name = "chicken ";
+    var name = "pizza"; // 방법 1
+    String name = "chicken"; // 방법 2
+    name = "chicken ";
 }
 ```
 
@@ -49,12 +49,12 @@ class에서 변수나 property를 선언할 때는 타입을 지정해준다.
 
 ```dart
 void main(){
- var vName;
-  dynamic dName;
+    var vName;
+    dynamic dName;
 
-  if (dName is String) {
+    if (dName is String) {
     // dName 이 string 이기에 내부 메서드 많이 나옴.
-  }
+    }
 }
 ```
 
@@ -94,12 +94,12 @@ Javascript const 랑 똑같다.
 
 ```dart
 void main() {
-final name = "testName";
-name = "test2Name"; // 수정 불가
+    final name = "testName";
+    name = "test2Name"; // 수정 불가
 
-final String username = "testStringName";
-// 명시적으로 타입을 추가로 지정할 순 있지만 컴파일러가 알아서 잘 추론하고, 값도 변경할 수 없기에 굳이 이렇게 할 필요는 없다.
-username = "test2StringName"; // 수정 불가
+    final String username = "testStringName";
+    // 명시적으로 타입을 추가로 지정할 순 있지만 컴파일러가 알아서 잘 추론하고, 값도 변경할 수 없기에 굳이 이렇게 할 필요는 없다.
+    username = "test2StringName"; // 수정 불가
 }
 ```
 
@@ -125,8 +125,126 @@ flutter 로 data fetching 을 할 때 유용하다.
 
 ```dart
 void main() {
-late final String name;
+    late final String name;
 
-print(name); // name 변수에 접근 불가
+    print(name); // name 변수에 접근 불가
 }
 ```
+
+<br>
+
+## 1.6 Constant Variables
+
+**const**
+
+dart 에서 const 는 `compile-time constant` 를 만들어준다.
+
+const 는 컴파일할 때 알고 있는 값을 사용해야 한다.
+
+만약 어떤 값인지 모르고, 그 값이 API로부터 오거나 사용자가 화면에서 입력해야 하는 값이라면 그건 const 가 아닌 final 이나 var 가 되어야 한다.
+
+```dart
+void main() {
+    const name = "testName"; // 컴파일 시점에 바뀌지 않는 값
+    final apiData = fetchAPI(); // 컴파일 시점에 바뀌는 값
+}
+```
+
+- const: 컴파일 시점에 바뀌지 않는 값 (상수)
+
+- final: 컴파일 시점에 바뀌는 값 (API에서 받아온 값, 사용자 입력값)
+
+<br>
+
+## 2.0 Basic Data Types
+
+**기본 데이터 타입**
+
+아래 타입을 포함한 거의 대부분의 타입들이 객체로 이루어져 있다. (함수도 객체)
+
+이것이 Dart 가 진정한 객체 지향 언어로 불리는 이유이다.
+
+```dart
+void main() {
+    String name = "tom";
+    bool isPlay = true;
+    int age = 10;
+    double money = 52.55;
+    num x = 12;
+    num y = 1.2;
+}
+```
+
+<br>
+
+## 2.1 Lists
+
+**List를 사용하는 2가지 방법**
+
+```dart
+void main() {
+    List<int> numbers = [1, 2, 3];
+    var number2 = [4, 5, 6];
+}
+```
+
+List 는 `collection if` 와 `collection for` 를 지원한다.
+
+`collection if` 는 List 를 만들 때, if 를 통해 존재할 수도 안 할 수도 있는 요소를 가지고 만들 수 있다.
+
+```dart
+void main() {
+    var giveMeFive = true;
+    var numbers = [
+    1,
+    2,
+    3,
+    4,
+    if (giveMeFive) 5, // giveMeFive가 true이면 5 넣음
+    ];
+    print(numbers);
+}
+```
+
+<br>
+
+## 2.2 String Interpolation
+
+**변수 사용하는 방법**
+
+`$` 기호를 붙이고 사용할 변수를 적어주면 된다.
+
+만약 무언가를 계산하고 싶다면 `${ }` 형태로 적어주면 된다.
+
+```dart
+void main(){
+    var name = "testName";
+    var age = 10;
+    var greeting = "hello $name, I'm ${age + 5}";
+
+    print(greeting);
+}
+```
+
+<br>
+
+## 2.3 Collection For
+
+**Collection For**
+
+`collection for` 는 List 를 만들 때, for 를 통해 반복적으로 요소를 추가할 수 있다.
+
+```dart
+void main() {
+  var oldFriends = ["nico", "lynn"];
+  var newFriends = [
+    "a",
+    "b",
+    for (var friend in oldFriends) "❤️ $friend",
+  ];
+
+  print(newFriends); // [a, b, ❤️ nico, ❤️ lynn]
+}
+```
+
+<br>
