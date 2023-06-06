@@ -476,3 +476,278 @@ void main() {
 ```
 
 <br>
+
+## 4.0 Your First Dart Class
+
+dart 에서 property 를 선언할 때는 타입을 사용해서 정의한다.
+
+```dart
+class Player {
+  final String name = 'testName';
+  int age = 3;
+  void sayName() {
+    // class method 안에서는 this를 쓰지 않는 것을 권장한다.
+    var name = 'aaa';
+    // 위 경우처럼 name 이 동일하게 있어서 variable 과 class property 의 이름이 겹칠 때는 this 를 써야한다.
+    print("Hi my name is ${this.name}");
+    print("Hi my name is $name");
+  }
+}
+
+void main() {
+// new를 꼭 붙이지 않아도 된다.
+  var testPlayer = Player();
+  testPlayer.age = 6;
+  testPlayer.sayName();
+  // testPlayer.name = '이름바꾸기'; <- final 로 되있어서 변경할 수 없다.
+}
+
+```
+
+<br>
+
+## 4.1 Constructors
+
+**생성자(constructor)**
+
+dart 에서 생성자(constructor) 함수는 클래스 이름과 같아야 한다.
+
+```dart
+class Player {
+    // 이럴 때 late를 사용한다.
+    late final String name;
+    late final int age;
+    // 클래스 이름과 같아야한다!
+    Player(String name, int age){
+        this.name = name;
+        this.age = age;
+    }
+}
+
+void main(){
+    // Player 클래스의 인스턴스 생성!
+    var player = Player("aaaaa", 11);
+}
+```
+
+위의 생성자 함수는 다음과 같이 줄일 수 있다.
+
+```dart
+class Player {
+    final String name;
+    final int age;
+    Player(this.name, this.age);
+}
+```
+
+첫 번째 인자는 this.name 으로 두 번째 인자는 this.age 로 간다.
+
+앞에서는 입력한 name 과 xp 를 property 값에 할당을 하였으나, property 값 자체를 매개변수에 넣음으로써 코드를 줄였다.
+
+<br>
+
+## 4.2 Named Constructor Parameters
+
+positional Constructor parameter 는 조금만 커져도 효율이 떨어진다.
+
+인자의 의미도 알수없고 헷갈리기 때문이다.
+
+Named Constructor 로 바꾸기 위해선 함수에 했던 것과 동일하게 할 수 있다.
+
+```dart
+class Player {
+  final String name;
+  String team;
+  int xp, age;
+
+  Player({
+    required this.name,
+    required this.xp,
+    required this.age,
+    required this.team,
+  });
+
+  sayHello() {
+    print("hi my name is $name");
+  }
+}
+
+void main() {
+  var player = Player(
+    name: "aaa",
+    xp: 1000,
+    team: 'blue',
+    age: 11,
+  );
+  player.sayHello();
+}
+```
+
+<br>
+
+## 4.3 Named Constructors
+
+**Named Constructors**
+
+flutter 에서 constructor 를 만들 때 자주 사용하는 방식이다.
+
+```dart
+class Player {
+  final String name;
+  String team;
+  int xp, age;
+
+  Player({
+    required this.name,
+    required this.xp,
+    required this.team,
+    required this.age,
+  });
+
+  Player.createBluePlayer({
+    required String name,
+    required int age,
+  })  : this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+
+  Player.createRedPlayer(String name, int age)
+      : this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+}
+
+void main() {
+  var bluePlayer = Player.createBluePlayer(
+    name: 'testName',
+    age: 1,
+  );
+  var redPlayer = Player.createRedPlayer('testName2', 2);
+}
+```
+
+Named Constructor 에서도 syntactic sugar(편의 문법) 이 존재한다.
+
+✅ Named parameters
+
+```dart
+// 일반적인 방법
+Player.createBlue({
+    required String name,
+    required int xp
+    }) : this.name = name,
+         this.xp = xp,
+         this.team = 'blue';
+
+// 간소화된 방법(dart는 간소화된 방법을 추천)
+Player.createRed({
+    required this.name,
+    required this.xp,
+    this.team = 'red',
+});
+```
+
+✅ Positional parameters
+
+```dart
+// 일반적인 방법
+Player.createRed(String name, int xp):
+    this.name = name,
+    this.xp = xp,
+    this.team = 'red';
+
+// 간소화된 방법
+Player.createRed(
+    this.name,
+    this.xp,
+    [this.team = 'red']
+);
+```
+
+<br>
+
+## 4.4 Recap
+
+일반적인 Constructor 와 Named Constructor 의 차이를 이해한다.
+
+```dart
+// Normal Constructor
+Player({
+    required this.name,
+    required this.xp,
+    required this.team,
+    required this.age,
+});
+
+// Named Constructor
+Player.createBluePlayer({
+    required String name,
+    required int age,
+  })  : this.age = age,
+        this.name = name,
+        this.team = 'blue',
+        this.xp = 0;
+```
+
+api 로 부터 json 형식의 데이터를 받을 경우가 많다.
+
+우리는 데이터를 flutter dart class 로 바꿔야 한다.
+
+`fromJson` 이라는 named constructor 가 flutter 에서 많이 사용하는 패턴이다.
+
+```dart
+class Player {
+  final String name;
+  String team;
+  int xp;
+
+  Player({
+    required this.name,
+    required this.xp,
+    required this.team,
+  });
+
+  Player.fromJson(Map<String, dynamic> playerJson)
+      : name = playerJson['name'],
+        xp = playerJson['xp'],
+        team = playerJson['team'];
+
+  sayHello() {
+    print("hi my name is $name");
+  }
+}
+
+void main() {
+  var apiData = [
+    {
+      'name': 'testName1',
+      'team': 'red',
+      'xp': 0,
+    },
+    {
+      'name': 'testName2',
+      'team': 'red',
+      'xp': 0,
+    },
+    {
+      'name': 'testName3',
+      'team': 'red',
+      'xp': 0,
+    },
+  ];
+
+  apiData.forEach((playerJson) {
+    var player = Player.fromJson(playerJson);
+    player.sayHello();
+  });
+
+  /*
+    hi my name is testName1
+    hi my name is testName2
+    hi my name is testName3
+  */
+}
+
+```
