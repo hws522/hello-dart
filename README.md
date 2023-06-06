@@ -325,3 +325,154 @@ Dart Set -> JS Set Dart Set -> Python Tuple
 
 Dart List -> JS Array Dart List -> Python List
 ```
+
+<br>
+
+## 3.0 Defining a Function
+
+**Functions**
+
+Dart 는 진정한 객체 지향 언어이므로 함수도 객체이며 타입이 Function 이다.
+
+이는 함수를 변수에 할당하거나 다른 함수에 인수로 전달할 수 있음을 의미한다.
+
+```dart
+void voidHello(String name) {
+    print("Hello ${name} nice to meet you.");
+}
+
+String returnHello(String name) {
+    return "Hello ${name} nice to meet you."
+}
+
+// 하나의 표현식만 포함하는 함수의 경우 아래와 같이 단축 구문을 사용할 수 있다.
+// fat arrow syntax
+String sayHello(String name) => "Hello ${name} nice to meet you.";
+
+num plus(num a, num b) => a + b;
+
+void main() {
+    print(sayHello("sugar"));
+}
+```
+
+<br>
+
+## 3.1 Named Parameters
+
+**Named parameters**
+
+Named parameters 는 명시적으로 required 로 표시되지 않는 한 선택 사항이다.
+
+Null safety 때문에, 함수의 매개변수에 중괄호를 추가하고 기본값 혹은, 필수값을 적용하면 된다.
+
+함수를 호출할 때는 전달해야하는 요소의 순서에 상관없이 함수의 정의만 보면 된다.
+
+```dart
+String sayHello({String name = 'defaultName', required int age, required String country}) {
+    return "${name} / ${age} / ${country}";
+}
+
+void main() {
+    print(sayHello(name: "sugar", country: "Korea", age: 10 ));
+}
+```
+
+<br>
+
+## 3.2 Recap
+
+- positional parameter
+
+  - 파라미터의 순서가 중요하다. 위치를 모두 기억해야 한다.
+
+  - 필수 파라미터를 모두 전달해야 컴파일 된다.
+
+- Named parameter
+
+  - 위치 대신 이름이 중요하다.
+
+  - 순서 위치를 기억하지 않아도 되기에, 정의된 함수를 볼 필요가 없다.
+
+  - null safety 때문에, 컴파일이 아닌 런타임에서 에러가 발생할 수 있다. (파라미터가 맞지않으면)
+
+  - 기본값 혹은 필수값을 적용하면 된다.
+
+<br>
+
+## 3.3 Optional Positional Parameters
+
+**Optional Positional Parameter**
+
+대괄호(`[]`)를 통해 country 를 optional 값으로 지정해줄 수 있다.
+
+optional positional parameter 를 지정할 때는 `[타입? 파라미터 = 기본값]` 의 형식을 지켜야 한다.
+
+```dart
+String sayHello(String name, int age, [String? country = ""]) {
+    return 'Hello ${name}, You are ${age} from the ${country}';
+}
+
+void main() {
+    var result = sayHello("sugar", 10);
+    print(result);
+}
+```
+
+<br>
+
+## 3.4 QQ Operator
+
+**QQ Operator**
+
+`??` 연산자를 이용하면 왼쪽 값이 null 인지 체크해서 null 이 아니면 왼쪽 값을 리턴하고 null 이면 오른쪽 값을 리턴한다.
+
+```dart
+String capitalizeName(String? name) {
+    return name?.toUpperCase() ?? "";
+    // name?.toUpperCase() 가 null 이면 "" 출력. null 아니면 name?.toUpperCase() 출력
+}
+```
+
+`??=` 연산자를 이용하면 변수 안에 값이 null 일 때를 체크해서 값을 할당해줄 수 있다.
+
+```dart
+void main() {
+    String? name;
+    name ??= "sugar";
+    name = null;
+    name ??= "js";
+    print(name); // js
+}
+```
+
+<br>
+
+## 3.5 Typedef
+
+**Typedef**
+
+자료형에 사용자가 원하는 alias 를 붙일 수 있게 해준다. (자료형 이름의 별명을 만들 때 사용)
+
+```dart
+typedef ListOfInt = List;
+
+ListOfInt reverseListOfNumbers(ListOfInt list) {
+    var reversedList = list.reversed.toList();
+    return reversedList;
+}
+
+---
+
+typedef UserInfo = Map<String, String>;
+
+String sayHi(UserInfo userInfo) {
+    return "Hi ${userInfo['name']}";
+}
+
+void main() {
+    sayHi({"asdfasdf": "nico"});
+}
+```
+
+<br>
