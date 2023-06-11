@@ -1,29 +1,20 @@
-class Player {
-  String name;
-  String team;
-  int xp;
-
-  Player({
-    required this.name,
-    required this.xp,
-    required this.team,
-  });
-
-  sayHello() {
-    print("hi my name is $name");
+class Human {
+  final String name;
+  Human({required this.name}); // 호출 받는다.
+  void sayHello() {
+    print("Hello! $name");
   }
 }
 
+enum Team { blue, red }
+
+class Player extends Human {
+  final Team team;
+
+  Player({required this.team, required String name}) : super(name: name);
+  // Human의 생성자 함수를 호출한다.
+}
+
 void main() {
-  var testPlayer = Player(name: 'testName', xp: 1200, team: 'blue');
-  testPlayer.name = 'changeName';
-  testPlayer.xp = 1000;
-  testPlayer.team = 'red';
-
-  var cascadePlayer = Player(name: 'testName', xp: 1200, team: 'blue');
-
-  var cascadePlayer2 = cascadePlayer
-    ..name = 'changeName'
-    ..xp = 1000
-    ..team = 'red';
+  var player = Player(team: Team.red, name: 'testname');
 }

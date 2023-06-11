@@ -752,6 +752,8 @@ void main() {
 
 ```
 
+<br>
+
 ## 4.5 Cascade Notation
 
 **cascade operator**
@@ -789,3 +791,127 @@ void main() {
     ..team = 'red';
 }
 ```
+
+<br>
+
+## 4.6 Enums
+
+enum 은 우리가 실수하지 않도록 도와주는 타입이다.
+
+enum type 의 변수들은 해당 enum type 에 생성된 값들 중에서만 값이 할당될 수 있다.
+
+dart 에서 enum type 을 만드는 법은 아래와 같다.
+
+```dart
+enum Team { red, blue }
+
+class Player {
+  String name;
+  Team team;
+  int xp;
+
+  Player({
+    required this.name,
+    required this.xp,
+    required this.team,
+  });
+
+  sayHello() {
+    print("hi my name is $name");
+  }
+}
+
+void main() {
+  var testPlayer = Player(name: 'testName', xp: 1200, team: Team.blue);
+  testPlayer.team = Team.red;
+
+  var cascadePlayer = Player(name: 'testName', xp: 1200, team: Team.blue);
+  var cascadePlayer2 = cascadePlayer
+    ..team = Team.red;
+}
+```
+
+<br>
+
+## 4.7 Abstract Classes
+
+**Abstract Method and Classes**
+
+추상화 클래스(Abstract Classes) 는 다른 클래스들이 직접 구현 해야하는 메소드들을 모아놓은 일종의 `청사진`이라 보면 된다.
+
+추상 클래스에서는 기능을 구현하지 않는다.
+
+추상 클래스를 상속받는 클래스들은 추상 클래스의 메소드들을 구현하도록 강제 한다.
+
+추상 메소드가 필요한 이유는 공통된 필드와 메소드를 통일하기 때문이다.
+
+클래스가 여러 개일 경우에는 전에 사용했던 필드 및 메소드와 이름과 규격이 달라질 수 있다.
+
+추상클래스는 필드와 메소드를 같은 이름과 규격으로 만들게 함으로써 통일성을 유지해준다.
+
+```dart
+abstract class Human {
+  void walk();
+}
+```
+
+extends를 이용해 상속, 확장을 할 수 있다.
+
+```dart
+abstract class Human {
+  void walk();
+}
+class Player extends Human {
+  // 생략
+  void walk(){
+    print("working!");
+  }
+}
+```
+
+<br>
+
+## 4.8 Inheritance
+
+**Inheritance**
+
+상속(Inheritance) 은 Flutter 에서는 가끔씩만 사용하게 되겠지만 꼭 알아둬야하는 개념이다.
+
+상속을 하고 super를 이용해 부모 클래스의 생성자를 호출할 수 있다.
+
+```dart
+class Human {
+  final String name;
+  Human({required this.name}); // 호출 받는다.
+  void sayHello() {
+    print("Hello! $name");
+  }
+}
+
+enum Team { blue, red }
+
+class Player extends Human {
+  final Team team;
+
+  Player({required this.team, required String name}) : super(name: name);
+  // Human의 생성자 함수를 호출한다.
+}
+
+void main() {
+  var player = Player(team: Team.red, name: 'testname');
+}
+
+```
+
+@override를 이용해 부모 클래스의 객체를 받아올 수 있다.
+
+```dart
+...
+@override
+void sayHello(){
+  super.sayHello();
+  print('and I play for $team');
+}
+```
+
+<br>
