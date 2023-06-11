@@ -1,5 +1,5 @@
 class Player {
-  final String name;
+  String name;
   String team;
   int xp;
 
@@ -9,37 +9,21 @@ class Player {
     required this.team,
   });
 
-  Player.fromJson(Map<String, dynamic> playerJson)
-      : name = playerJson['name'],
-        xp = playerJson['xp'],
-        team = playerJson['team'];
-
   sayHello() {
     print("hi my name is $name");
   }
 }
 
 void main() {
-  var apiData = [
-    {
-      'name': 'testName1',
-      'team': 'red',
-      'xp': 0,
-    },
-    {
-      'name': 'testName2',
-      'team': 'red',
-      'xp': 0,
-    },
-    {
-      'name': 'testName3',
-      'team': 'red',
-      'xp': 0,
-    },
-  ];
+  var testPlayer = Player(name: 'testName', xp: 1200, team: 'blue');
+  testPlayer.name = 'changeName';
+  testPlayer.xp = 1000;
+  testPlayer.team = 'red';
 
-  apiData.forEach((playerJson) {
-    var player = Player.fromJson(playerJson);
-    player.sayHello();
-  });
+  var cascadePlayer = Player(name: 'testName', xp: 1200, team: 'blue');
+
+  var cascadePlayer2 = cascadePlayer
+    ..name = 'changeName'
+    ..xp = 1000
+    ..team = 'red';
 }
