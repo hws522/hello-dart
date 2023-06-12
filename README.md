@@ -915,3 +915,52 @@ void sayHello(){
 ```
 
 <br>
+
+## 4.9 Mixins
+
+**Mixins**
+
+Mixin 은 생성자가 없는 클래스를 의미한다.
+
+Mixin 클래스는 상속을 할 때 `extends` 를 하지 않고 `with` 를 사용한다.
+
+Mixin의 핵심은 여러 클래스에 재사용이 가능하다는 점이다.
+
+extends 와 차이점은 extends 를 하게 되면 확장한 그 클래스는 부모 클래스가 되지만 with는 부모의 인스턴스 관계가 된다.
+
+단순하게 mixin 내부의 프로퍼티를 갖고 오는 거라고 생각하면 쉽다.
+
+```dart
+mixin class Strong {
+  final double strengthLevel = 1500.99;
+}
+
+mixin class QuickRunner {
+  void runQuick() {
+    print('ruuuuuuuuuuuuuuuuuun!');
+  }
+}
+
+mixin Tall {
+  final double height = 1.99;
+}
+
+enum Team { blue, red }
+
+class Player with Strong, QuickRunner, Tall {
+  final Team team;
+
+  Player({required this.team});
+}
+
+class Horse with Strong, QuickRunner {}
+
+class Kid with QuickRunner {}
+
+void main() {
+  var player = Player(
+    team: Team.red,
+  );
+  player.runQuick();
+}
+```
